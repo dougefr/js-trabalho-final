@@ -7,7 +7,13 @@ window.onload = function () {
   var closeBtn = document.getElementById("close");
 
   // Cria um novo socket.
-  var socket = new WebSocket("ws://" + location.host + "/chat/" + name);
+  var socket;
+
+  try {
+    socket = new WebSocket("ws://" + location.host + "/chat/" + name);
+  } catch (err) {
+    socket = new WebSocket("wss://" + location.host + "/chat/" + name);
+  }
 
   // Função para tratar os erros que podem ocorrer
   socket.onerror = function (error) {
